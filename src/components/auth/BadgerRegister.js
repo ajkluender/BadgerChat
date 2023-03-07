@@ -7,6 +7,7 @@ export default function BadgerRegister() {
   const [username1, setUsername] = useState("");
   const [password1, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useContext(UserLoginContext);
 
   const navigate = useNavigate();
 
@@ -45,6 +46,7 @@ export default function BadgerRegister() {
         })
         .then((json) => {
           //json.user.username() context set not null
+          setIsAuthenticated(true);
           navigate("/");
           //alert succ
         });

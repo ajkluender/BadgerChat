@@ -13,6 +13,7 @@ import UserLoginContext from "../../contexts/UserLoginContext";
 
 function BadgerApp() {
   const [chatrooms, setChatrooms] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState([]);
 
   useEffect(() => {
     fetch("https://cs571.org/s23/hw6/api/chatroom", {
@@ -27,9 +28,7 @@ function BadgerApp() {
   }, []);
 
   return (
-    <UserLoginContext.Provider
-      value={{ loggedIn: false, setLoggedIn: () => {} }}
-    >
+    <UserLoginContext.Provider value={[isAuthenticated, setIsAuthenticated]}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<BadgerLayout chatrooms={chatrooms} />}>

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import UserLoginContext from "../../contexts/UserLoginContext";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ export default function BadgerLogin() {
   const inputPass = useRef();
 
   const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useContext(UserLoginContext);
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -47,7 +48,7 @@ export default function BadgerLogin() {
       })
       .then((json) => {
         // Hand
-
+        setIsAuthenticated(true);
         navigate("/");
       });
   };
