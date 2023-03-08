@@ -11,8 +11,6 @@ function BadgerMessage(props) {
   const handleDeleteClick = () => {
     props.onDelete(props.id);
   };
-  console.log(usernamePoster);
-  console.log(props.poster);
   useEffect(() => {
     if (usernamePoster === props.poster) {
       setDelete(true);
