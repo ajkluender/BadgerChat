@@ -1,13 +1,17 @@
 import React, { useState, useContext } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+
 import UserLoginContext from "../../contexts/UserLoginContext";
+
+import UserNameContext from "../../contexts/UserNameContext";
 
 export default function BadgerRegister() {
   const [username1, setUsername] = useState("");
   const [password1, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useContext(UserLoginContext);
+  const [usernamePoster, setUsernamePoster] = useContext(UserNameContext);
 
   const navigate = useNavigate();
 
@@ -15,7 +19,6 @@ export default function BadgerRegister() {
 
   const handleRegister = (event) => {
     event.preventDefault();
-    console.log("hello");
     if (!username1 || !password1) {
       alert("You must provide both a username and password!");
       return;
@@ -41,14 +44,14 @@ export default function BadgerRegister() {
           if (res.status === 409) {
             alert("That username has already been taken!");
           }
-          alert("Registration was succcesful");
+
           return res.json();
         })
         .then((json) => {
-          //json.user.username() context set not null
           setIsAuthenticated(true);
+          setUsernamePoster(json.user.username);
           navigate("/");
-          //alert succ
+          alert("Registration was succcesful");
         });
     }
   };

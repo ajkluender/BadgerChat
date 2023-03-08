@@ -50,7 +50,24 @@ export default function BadgerChatroom(props) {
     });
   };
 
-  const handleDeletePost = (postID) => {};
+  const handleDeletePost = (postID) => {
+    fetch(
+      `https://cs571.org/s23/hw6/api/chatroom/${props.name}/messages/${postID}`,
+      {
+        method: "DELETE",
+        headers: {
+          "X-CS571-ID": "bid_f224feb3a93089e00cb6",
+        },
+        credentials: "include",
+      }
+    ).then((res) => {
+      if (res.status === 200) {
+        setMessages((prevMessages) => {
+          return prevMessages.filter((message) => message.id !== postID);
+        });
+      }
+    });
+  };
 
   useEffect(() => {
     loadMessages();

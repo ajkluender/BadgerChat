@@ -1,9 +1,12 @@
 import React, { useContext, useEffect } from "react";
+import UserNameContext from "../../contexts/UserNameContext";
 
 import UserLoginContext from "../../contexts/UserLoginContext";
 
 export default function BadgerLogout() {
   const [isAuthenticated, setIsAuthenticated] = useContext(UserLoginContext);
+  const [usernamePoster, setUsernamePoster] = useContext(UserNameContext);
+
   useEffect(() => {
     fetch("https://cs571.org/s23/hw6/api/logout", {
       method: "POST",
@@ -16,6 +19,7 @@ export default function BadgerLogout() {
       .then((json) => {
         // Maybe you need to do something here?
         setIsAuthenticated(false);
+        setUsernamePoster("");
       });
   }, []);
 

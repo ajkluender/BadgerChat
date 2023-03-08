@@ -2,6 +2,7 @@ import React, { useState, useRef, useContext, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import UserLoginContext from "../../contexts/UserLoginContext";
 import { useNavigate } from "react-router-dom";
+import UserNameContext from "../../contexts/UserNameContext";
 
 export default function BadgerLogin() {
   // TODO Create the login component.
@@ -10,6 +11,7 @@ export default function BadgerLogin() {
 
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useContext(UserLoginContext);
+  const [usernamePoster, setUsernamePoster] = useContext(UserNameContext);
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -49,6 +51,7 @@ export default function BadgerLogin() {
       .then((json) => {
         // Hand
         setIsAuthenticated(true);
+        setUsernamePoster(json.user.username);
         navigate("/");
       });
   };

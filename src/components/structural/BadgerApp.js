@@ -10,10 +10,12 @@ import BadgerChatHome from "../content/BadgerChatHome";
 import BadgerNoMatch from "../content/BadgerNoMatch";
 
 import UserLoginContext from "../../contexts/UserLoginContext";
+import UserNameContext from "../../contexts/UserNameContext";
 
 function BadgerApp() {
   const [chatrooms, setChatrooms] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState([]);
+  const [usernamePoster, setUsernamePoster] = useState([]);
 
   useEffect(() => {
     fetch("https://cs571.org/s23/hw6/api/chatroom", {
@@ -29,26 +31,28 @@ function BadgerApp() {
 
   return (
     <UserLoginContext.Provider value={[isAuthenticated, setIsAuthenticated]}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<BadgerLayout chatrooms={chatrooms} />}>
-            <Route index element={<BadgerChatHome />} />
-            <Route path="/login" element={<BadgerLogin />}></Route>
-            <Route path="/register" element={<BadgerRegister />}></Route>
-            <Route path="/logout" element={<BadgerLogout />}></Route>
-            {chatrooms.map((chatroom) => {
-              return (
-                <Route
-                  key={chatroom}
-                  path={`chatrooms/${chatroom}`}
-                  element={<BadgerChatroom name={chatroom} />}
-                />
-              );
-            })}
-            <Route path="*" element={<BadgerNoMatch />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <UserNameContext.Provider value={[usernamePoster, setUsernamePoster]}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<BadgerLayout chatrooms={chatrooms} />}>
+              <Route index element={<BadgerChatHome />} />
+              <Route path="/login" element={<BadgerLogin />}></Route>
+              <Route path="/register" element={<BadgerRegister />}></Route>
+              <Route path="/logout" element={<BadgerLogout />}></Route>
+              {chatrooms.map((chatroom) => {
+                return (
+                  <Route
+                    key={chatroom}
+                    path={`chatrooms/${chatroom}`}
+                    element={<BadgerChatroom name={chatroom} />}
+                  />
+                );
+              })}
+              <Route path="*" element={<BadgerNoMatch />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </UserNameContext.Provider>
     </UserLoginContext.Provider>
   );
 }
